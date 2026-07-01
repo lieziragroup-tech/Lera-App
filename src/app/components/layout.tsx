@@ -47,9 +47,10 @@ export function Layout() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu whenever the route changes
+  // Close mobile menu and scroll back to top whenever the route changes
   useEffect(() => {
     setMenuOpen(false);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
   }, [location.pathname]);
 
   return (
