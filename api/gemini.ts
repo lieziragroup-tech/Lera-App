@@ -1,11 +1,3 @@
-// Vercel Serverless Function — runs on the server only.
-// The Gemini API key never reaches the browser because this code
-// never ships as part of the client JS bundle.
-//
-// IMPORTANT: set this in Vercel → Project Settings → Environment Variables
-// as `GEMINI_API_KEY` (NOT `VITE_GEMINI_API_KEY`). Any variable prefixed
-// with VITE_ gets baked into the client bundle by Vite and would leak
-// the key to anyone who opens DevTools.
 
 export default async function handler(req: any, res: any) {
   if (req.method !== "POST") {
