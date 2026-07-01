@@ -1,8 +1,53 @@
+import { useState, FormEvent } from "react";
 import { motion } from "motion/react";
-import { Link } from "react-router";
-import { Leaf, Mail, Lock, ArrowRight, Github } from "lucide-react";
+import { Link, useNavigate } from "react-router";
+import { Leaf, Mail, Lock, ArrowRight, Github, Loader2 } from "lucide-react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../lib/firebase";
+
+function getLoginErrorMessage(code: string) {
+  switch (code) {
+    case "auth/invalid-credential":
+    case "auth/wrong-password":
+    case "auth/user-not-found":
+      return "Email atau password salah.";
+    case "auth/invalid-email":
+      return "Format email tidak valid.";
+    case "auth/too-many-requests":
+      return "Terlalu banyak percobaan. Coba lagi beberapa saat lagi.";
+    default:
+      return "Gagal masuk. Silakan coba lagi.";
+  }
+}
 
 export function Login() {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    if (!email.trim() || !password) {
+      setError("Email dan password wajib diisi.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/dashboard", { replace: true });
+    } catch (err: any) {
+      setError(getLoginErrorMessage(err?.code));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-green-50/50 relative overflow-hidden dark:bg-[#0a0f0d]">
       {/* Background eco-elements */}
@@ -23,15 +68,24 @@ export function Login() {
           <p className="text-gray-500 dark:text-gray-400 text-center text-sm">Continue your journey towards a greener future.</p>
         </div>
 
-        <form className="space-y-4">
+        {error && (
+          <div className="mb-4 px-4 py-2.5 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 text-sm">
+            {error}
+          </div>
+        )}
+
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-1.5">
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input 
                 type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all dark:text-white"
                 placeholder="eco@example.com"
+                autoComplete="email"
               />
             </div>
           </div>
@@ -45,18 +99,31 @@ export function Login() {
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input 
                 type="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all dark:text-white"
                 placeholder="••••••••"
+                autoComplete="current-password"
               />
             </div>
           </div>
 
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full py-3 mt-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl font-medium flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 transition-all"
+            type="submit"
+            disabled={loading}
+            whileHover={{ scale: loading ? 1 : 1.02 }}
+            whileTap={{ scale: loading ? 1 : 0.98 }}
+            className="w-full py-3 mt-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl font-medium flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            Sign In <ArrowRight className="w-4 h-4" />
+            {loading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" /> Signing in...
+              </>
+            ) : (
+              <>
+                Sign In <ArrowRight className="w-4 h-4" />
+              </>
+            )}
           </motion.button>
         </form>
 

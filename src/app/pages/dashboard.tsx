@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { 
   LayoutDashboard, ShoppingBag, Leaf, Award, User, LogOut, 
   Settings, ChevronRight, BarChart3, Activity 
 } from "lucide-react";
 import leraLogo from "../../imports/LERA__Eco-Dissolvable_Cleaning_Sheet.png";
+import { useAuth } from "../../lib/auth-context";
 
 const serif = { fontFamily: "'Playfair Display', Georgia, serif" };
 
@@ -20,6 +21,21 @@ const sidebarItems = [
 
 export function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const displayName = user?.displayName || user?.email?.split("@")[0] || "User";
+  const initials = displayName
+    .split(" ")
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/", { replace: true });
+  };
 
   return (
     <div className="min-h-[100svh] bg-secondary/30 flex w-full max-w-[100vw] overflow-x-hidden">
@@ -50,10 +66,13 @@ export function Dashboard() {
         </div>
 
         <div className="p-4 border-t border-border/40">
-          <Link to="/" className="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-xl text-sm font-medium text-destructive/80 hover:bg-destructive/10 hover:text-destructive transition-colors">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-xl text-sm font-medium text-destructive/80 hover:bg-destructive/10 hover:text-destructive transition-colors"
+          >
             <LogOut className="w-4 h-4" />
             Logout
-          </Link>
+          </button>
         </div>
       </aside>
 
@@ -75,11 +94,11 @@ export function Dashboard() {
             </button>
             <div className="flex items-center gap-3 pl-4 border-l border-border/50">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-semibold text-foreground leading-tight">Anindya Kusuma</p>
+                <p className="text-sm font-semibold text-foreground leading-tight">{displayName}</p>
                 <p className="text-xs text-primary font-medium">Forest Guardian</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-primary/20 border-2 border-primary overflow-hidden shrink-0">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop" alt="Profile" className="w-full h-full object-cover" />
+              <div className="w-10 h-10 rounded-full bg-primary/20 border-2 border-primary overflow-hidden shrink-0 flex items-center justify-center text-primary font-semibold text-sm">
+                {initials}
               </div>
             </div>
           </div>
@@ -100,7 +119,7 @@ export function Dashboard() {
                   <div className="bg-gradient-to-br from-primary/90 to-accent text-primary-foreground rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
                     <div className="absolute right-0 top-0 bottom-0 w-64 bg-white/10 blur-3xl rounded-full transform translate-x-1/3"></div>
                     <div className="relative z-10 max-w-lg">
-                      <h3 style={serif} className="text-2xl sm:text-3xl font-semibold mb-2">Welcome back, Anindya!</h3>
+                      <h3 style={serif} className="text-2xl sm:text-3xl font-semibold mb-2">Welcome back, {displayName}!</h3>
                       <p className="text-primary-foreground/80 mb-6 text-sm leading-relaxed">
                         Anda telah bersama LERA selama 4 bulan. Total dampak karbon Anda minggu ini meningkat 12%. Terus lanjutkan kebiasaan baik ini!
                       </p>

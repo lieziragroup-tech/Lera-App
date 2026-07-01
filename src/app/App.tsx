@@ -14,6 +14,7 @@ import { Contact } from "./pages/contact";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { Dashboard } from "./pages/dashboard";
+import { ProtectedRoute } from "./components/protected-route";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,14 @@ const router = createBrowserRouter([
       { path: "how-it-works", element: <HowItWorks /> },
       { path: "articles", element: <Articles /> },
       { path: "contact", element: <Contact /> },
-      { path: "dashboard", element: <Dashboard /> },
+      {
+        path: "dashboard",
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
   { path: "/login", element: <Login /> },
