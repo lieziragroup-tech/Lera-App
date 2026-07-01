@@ -11,7 +11,6 @@ import { About } from "./pages/about";
 import { HowItWorks } from "./pages/how-it-works";
 import { Articles } from "./pages/articles";
 import { Contact } from "./pages/contact";
-import { FAQ } from "./pages/faq";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { Dashboard } from "./pages/dashboard";
@@ -33,7 +32,6 @@ const router = createBrowserRouter([
       { path: "how-it-works", element: <HowItWorks /> },
       { path: "articles", element: <Articles /> },
       { path: "contact", element: <Contact /> },
-      { path: "faq", element: <FAQ /> },
       {
         path: "dashboard",
         element: (
