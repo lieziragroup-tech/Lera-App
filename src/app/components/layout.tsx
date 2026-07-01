@@ -1,187 +1,242 @@
-import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Sparkles, RefreshCw } from "lucide-react";
-import { ChatContent } from "../components/chat-content";
-import { type ChatMessage, askTerra, terraSuggestions } from "../../lib/terra-chat";
+import { useState, useEffect } from "react";
+import { Link, NavLink, Outlet, useLocation } from "react-router";
+import { Menu, X, Instagram, Twitter, Facebook, LogOut, LayoutDashboard } from "lucide-react";
+import leraLogo from "../../imports/LERA__Eco-Dissolvable_Cleaning_Sheet.png";
+import { useAuth } from "../../lib/auth-context";
 
 const serif = { fontFamily: "'Playfair Display', Georgia, serif" };
 
-const capabilities = [
-  { icon: "🌿", title: "Rekomendasi Produk", desc: "Temukan varian LERA yang sempurna untuk jenis kulitmu" },
-  { icon: "📊", title: "Kalkulasi Dampak", desc: "Hitung CO₂ dan plastik yang sudah kamu hemat" },
-  { icon: "💡", title: "Tips Sustainable", desc: "Panduan gaya hidup ramah lingkungan yang dipersonalisasi" },
-  { icon: "❓", title: "Info Bahan & Formula", desc: "Pelajari setiap bahan di balik produk LERA" },
-  { icon: "🏆", title: "Panduan Carbon Club", desc: "Strategi terbaik untuk naik level dan raih reward" },
-  { icon: "♻️", title: "Circular Return Help", desc: "Panduan lengkap sistem pengembalian kemasan" },
+const navLinks = [
+  { label: "Beranda", href: "/" },
+  { label: "Produk", href: "/products" },
+  { label: "Platform", href: "/platform" },
+  { label: "Carbon Club", href: "/carbon-club" },
+  { label: "Impact Passport", href: "/impact-passport" },
+  { label: "AI Assistant", href: "/ai-assistant" },
+  { label: "Tentang", href: "/about" },
 ];
 
-const initialMessage: ChatMessage = {
-  id: 0,
-  role: "assistant",
-  content:
-    "Halo! Saya **Terra**, AI Consultant khusus untuk produk dan perjalanan hijaumu bersama LERA. 🌿\n\nSaya bisa membantu dengan rekomendasi produk, kalkulasi dampak lingkungan, tips gaya hidup sustainable, dan banyak lagi. Ada yang ingin kamu tanyakan?",
+const footerLinks = {
+  Produk: [
+    { label: "Semua Produk", href: "/products" },
+    { label: "Cara Kerja", href: "/how-it-works" },
+    { label: "Circular Return", href: "/circular-return" },
+  ],
+  Platform: [
+    { label: "Carbon Club", href: "/carbon-club" },
+    { label: "Impact Passport", href: "/impact-passport" },
+    { label: "AI Eco Assistant", href: "/ai-assistant" },
+  ],
+  Perusahaan: [
+    { label: "Tentang Kami", href: "/about" },
+    { label: "Artikel", href: "/articles" },
+    { label: "Kontak", href: "/contact" },
+  ],
 };
 
-export function AIAssistant() {
-  const [messages, setMessages] = useState<ChatMessage[]>([initialMessage]);
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+export function Layout() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  const sendMessage = async (text: string) => {
-    if (!text.trim() || loading) return;
-
-    const userMsg: ChatMessage = { id: Date.now(), role: "user", content: text };
-    setMessages((prev) => [...prev, userMsg]);
-    setInput("");
-    setLoading(true);
-
-    const replyText = await askTerra(text);
-    setMessages((prev) => [...prev, { id: Date.now() + 1, role: "assistant", content: replyText }]);
-    setLoading(false);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    sendMessage(input);
-  };
+  // Close mobile menu whenever the route changes
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   return (
-    <div className="pt-16">
+    <div className="min-h-[100svh] w-full max-w-[100vw] overflow-x-hidden bg-background text-foreground">
       {/* Header */}
-      <section
-        className="py-20"
-        style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(44,85,69,0.12) 0%, transparent 60%), #F4EFE6" }}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled ? "bg-background/90 backdrop-blur-md border-b border-border/60 shadow-sm" : "bg-transparent"
+        }`}
       >
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mx-auto mb-6">
-            <Bot className="w-8 h-8 text-primary-foreground" />
-          </div>
-          <p className="text-xs font-medium tracking-widest uppercase text-accent mb-3">Powered by AI</p>
-          <h1 style={serif} className="text-4xl md:text-5xl font-semibold text-foreground mb-4">
-            AI Eco Assistant
-          </h1>
-          <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto">
-            Asisten cerdasmu untuk edukasi gaya hidup ramah lingkungan, rekomendasi produk personal, dan kalkulasi dampak karbonmu.
-          </p>
-        </div>
-      </section>
-
-      <section className="py-10 pb-0">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-4 mb-10">
-            {capabilities.map((c) => (
-              <div key={c.title} className="bg-card border border-border rounded-2xl p-5 flex gap-3.5 items-start">
-                <div className="text-2xl shrink-0">{c.icon}</div>
-                <div>
-                  <div className="text-sm font-semibold text-foreground mb-1">{c.title}</div>
-                  <div className="text-xs text-muted-foreground leading-relaxed">{c.desc}</div>
-                </div>
+          <div className="flex items-center justify-between h-16">
+            <Link to="/" className="flex items-center gap-2 shrink-0">
+              <img src={leraLogo} alt="LERA" className="h-8 w-auto object-contain" />
+            </Link>
+
+            {/* Desktop nav */}
+            <nav className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.href}
+                  to={link.href}
+                  className={({ isActive }) =>
+                    `px-3.5 py-2 rounded-full text-sm font-medium transition-colors ${
+                      isActive ? "bg-primary/10 text-primary" : "text-foreground/70 hover:text-foreground hover:bg-muted"
+                    }`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+            </nav>
+
+            {/* Desktop auth actions */}
+            <div className="hidden lg:flex items-center gap-3">
+              {user ? (
+                <>
+                  <Link
+                    to="/dashboard"
+                    className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-foreground/80 hover:bg-muted transition-colors"
+                  >
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={() => signOut()}
+                    className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-foreground/60 hover:text-destructive hover:bg-destructive/10 transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Keluar
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="px-4 py-2 rounded-full text-sm font-medium text-foreground/80 hover:bg-muted transition-colors"
+                  >
+                    Masuk
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="px-5 py-2 rounded-full text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                  >
+                    Daftar
+                  </Link>
+                </>
+              )}
+            </div>
+
+            {/* Mobile menu toggle */}
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              className="lg:hidden p-2 rounded-xl hover:bg-muted transition-colors"
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile nav */}
+        {menuOpen && (
+          <div className="lg:hidden bg-background border-t border-border/60 px-6 py-4">
+            <nav className="flex flex-col gap-1">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.href}
+                  to={link.href}
+                  className={({ isActive }) =>
+                    `px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                      isActive ? "bg-primary/10 text-primary" : "text-foreground/70 hover:bg-muted"
+                    }`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+            </nav>
+            <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border/60">
+              {user ? (
+                <>
+                  <Link to="/dashboard" className="px-4 py-2.5 rounded-xl text-sm font-medium text-center bg-muted">
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={() => signOut()}
+                    className="px-4 py-2.5 rounded-xl text-sm font-medium text-center text-destructive"
+                  >
+                    Keluar
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="px-4 py-2.5 rounded-xl text-sm font-medium text-center bg-muted">
+                    Masuk
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="px-4 py-2.5 rounded-xl text-sm font-medium text-center bg-primary text-primary-foreground"
+                  >
+                    Daftar
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Page content */}
+      <main>
+        <Outlet />
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-primary text-primary-foreground">
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <div className="grid md:grid-cols-[1.3fr_1fr_1fr_1fr] gap-12">
+            <div>
+              <img src={leraLogo} alt="LERA" className="h-9 w-auto object-contain mb-4 brightness-0 invert opacity-95" />
+              <p style={serif} className="text-lg mb-3">Bersih tanpa jejak plastik.</p>
+              <p className="text-sm text-primary-foreground/70 leading-relaxed max-w-xs">
+                Lembaran pembersih larut-air dari bahan alami Nusantara — dirancang untuk gaya hidup yang lebih ringan bagi bumi.
+              </p>
+              <div className="flex gap-3 mt-6">
+                <a href="#" className="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a href="#" className="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
+                  <Twitter className="w-4 h-4" />
+                </a>
+                <a href="#" className="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
+                  <Facebook className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+
+            {Object.entries(footerLinks).map(([section, links]) => (
+              <div key={section}>
+                <p className="text-xs font-semibold tracking-widest uppercase text-primary-foreground/50 mb-4">{section}</p>
+                <ul className="flex flex-col gap-2.5">
+                  {links.map((link) => (
+                    <li key={link.href}>
+                      <Link to={link.href} className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Chat Interface */}
-      <section className="pb-28">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
-            {/* Chat header */}
-            <div className="px-6 py-4 border-b border-border flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
-                <Bot className="w-4.5 h-4.5 text-primary-foreground" />
-              </div>
-              <div>
-                <div className="text-sm font-semibold text-foreground">Terra</div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-xs text-muted-foreground">Online · Siap membantu</span>
-                </div>
-              </div>
-              <button
-                onClick={() => setMessages([initialMessage])}
-                className="ml-auto p-2 hover:bg-muted rounded-xl transition-colors text-muted-foreground hover:text-foreground"
-              >
-                <RefreshCw className="w-4 h-4" />
-              </button>
+          <div className="mt-14 pt-8 border-t border-primary-foreground/15 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-xs text-primary-foreground/60">© {new Date().getFullYear()} LERA. Semua hak dilindungi.</p>
+            <div className="flex gap-6">
+              <Link to="/contact" className="text-xs text-primary-foreground/60 hover:text-primary-foreground transition-colors">
+                Kontak
+              </Link>
+              <Link to="/faq" className="text-xs text-primary-foreground/60 hover:text-primary-foreground transition-colors">
+                FAQ
+              </Link>
             </div>
-
-            {/* Messages */}
-            <div className="h-96 overflow-y-auto p-6 space-y-5">
-              {messages.map((m) => (
-                <div key={m.id} className={`flex gap-3 ${m.role === "user" ? "flex-row-reverse" : ""}`}>
-                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${m.role === "assistant" ? "bg-primary" : "bg-secondary"}`}>
-                    {m.role === "assistant" ? (
-                      <Sparkles className="w-4 h-4 text-primary-foreground" />
-                    ) : (
-                      <User className="w-4 h-4 text-secondary-foreground" />
-                    )}
-                  </div>
-                  <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${m.role === "assistant" ? "bg-muted text-foreground rounded-tl-sm" : "bg-primary text-primary-foreground rounded-tr-sm"}`}>
-                    <ChatContent content={m.content} />
-                  </div>
-                </div>
-              ))}
-
-              {loading && (
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center">
-                    <Sparkles className="w-4 h-4 text-primary-foreground" />
-                  </div>
-                  <div className="bg-muted rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-1.5">
-                    {[0, 1, 2].map((i) => (
-                      <div key={i} className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
-                    ))}
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Suggestions */}
-            <div className="px-6 py-3 border-t border-border">
-              <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-                {terraSuggestions.map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => sendMessage(s)}
-                    className="text-xs whitespace-nowrap px-3 py-1.5 bg-muted hover:bg-primary/10 hover:text-primary border border-border rounded-full transition-colors shrink-0"
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Input */}
-            <form onSubmit={handleSubmit} className="px-6 py-4 border-t border-border flex gap-3">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Tanyakan sesuatu tentang LERA..."
-                disabled={loading}
-                className="flex-1 px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:border-primary transition-colors placeholder:text-muted-foreground/50 disabled:opacity-50"
-              />
-              <button
-                type="submit"
-                disabled={!input.trim() || loading}
-                className="w-11 h-11 bg-primary text-primary-foreground rounded-xl flex items-center justify-center hover:bg-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </form>
           </div>
-
-          <p className="text-center text-xs text-muted-foreground mt-4">
-            Terra memberikan panduan umum seputar LERA. Untuk keperluan medis, selalu konsultasikan dengan dokter.
-          </p>
         </div>
-      </section>
+      </footer>
     </div>
   );
 }
