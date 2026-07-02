@@ -89,7 +89,6 @@ export function Mart() {
 
   return (
     <div className="pb-20 md:pb-0">
-      {/* Hero */}
       <section className="bg-gradient-to-br from-[#7A9088] to-[#9AB0A8] text-white py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -100,11 +99,8 @@ export function Mart() {
           </div>
         </div>
       </section>
-
-      {/* Main Content */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          {/* Category Filter */}
           <Tabs defaultValue="all" className="mb-8" onValueChange={setSelectedCategory}>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold">Jelajahi Produk</h2>
@@ -119,8 +115,6 @@ export function Mart() {
               <TabsTrigger value="EcoClean">EcoClean</TabsTrigger>
             </TabsList>
           </Tabs>
-
-          {/* Products Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
               <Card key={product.id} className="group hover:shadow-lg transition-shadow overflow-hidden">

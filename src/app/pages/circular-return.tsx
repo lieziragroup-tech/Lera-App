@@ -1,5 +1,9 @@
-import { Link } from "react-router";
-import { ArrowRight, QrCode, MapPin, Gift, Truck, Check, Leaf, Package } from "lucide-react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { ArrowRight, QrCode, MapPin, Gift, Truck, Check, Leaf, Package, Loader2, PartyPopper } from "lucide-react";
+import { useAuth } from "../../lib/auth-context";
+import { createReturn, type ReturnSize } from "../../lib/firestore";
+import { LERA_WHATSAPP_NUMBER, openWhatsApp, reserveWhatsAppWindow } from "../../lib/whatsapp";
 
 const serif = { fontFamily: "'Playfair Display', Georgia, serif" };
 
@@ -63,10 +67,54 @@ const dropPoints = [
   { city: "Lainnya", count: "81+", areas: "Semarang, Palembang, Balikpapan, dll." },
 ];
 
+const sizeLabels: Record<ReturnSize, string> = {
+  S: "Ukuran S — 15 pts/kemasan",
+  M: "Ukuran M — 20 pts/kemasan",
+  L: "Ukuran L — 30 pts/kemasan",
+};
+
 export function CircularReturn() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const [size, setSize] = useState<ReturnSize>("M");
+  const [qty, setQty] = useState(1);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState<{ points: number; co2Saved: number } | null>(null);
+
+  const handleSubmitReturn = async () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    setError("");
+    setSubmitting(true);
+
+    // Reserve the tab before any await so the popup isn't blocked.
+    const waWindow = reserveWhatsAppWindow();
+
+    try {
+      const userName = user.displayName || user.email || "Pelanggan LERA";
+      const returnEntry = await createReturn({ uid: user.uid, userName, size, qty });
+
+      const message = `Halo LERA! ♻️ Saya ingin mengajukan pengembalian kemasan:\n\n📦 Ukuran: ${size} x${qty}\n⭐ Poin: +${returnEntry.points}\n👤 Atas nama: ${userName}\n🆔 ID Pengembalian: ${returnEntry.id}\n\nMohon info drop-point terdekat atau jadwal pickup-nya. Terima kasih! 🌿`;
+
+      openWhatsApp(waWindow, LERA_WHATSAPP_NUMBER, message);
+      setSuccess({ points: returnEntry.points, co2Saved: returnEntry.co2Saved });
+      setQty(1);
+    } catch (err) {
+      console.error("Return submission failed:", err);
+      waWindow?.close();
+      setError("Gagal mengajukan pengembalian. Silakan coba lagi.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className="pt-16">
-      {/* Hero */}
       <section
         className="py-28 relative overflow-hidden"
         style={{ background: "radial-gradient(ellipse at 25% 60%, rgba(44,85,69,0.18) 0%, transparent 55%), radial-gradient(ellipse at 75% 25%, rgba(184,115,51,0.1) 0%, transparent 55%), #F4EFE6" }}
@@ -114,6 +162,101 @@ export function CircularReturn() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Submit a Return — real transaction */}
+      <section className="py-24 bg-secondary/40">
+        <div className="max-w-xl mx-auto px-6">
+          <div className="text-center mb-10">
+            <p className="text-xs font-medium tracking-widest uppercase text-accent mb-3">Ajukan Sekarang</p>
+            <h2 style={serif} className="text-4xl font-semibold text-foreground">Kembalikan Kemasanmu</h2>
+          </div>
+
+          <div className="bg-card border border-border rounded-2xl p-7">
+            {success ? (
+              <div className="text-center py-6">
+                <PartyPopper className="w-10 h-10 text-primary mx-auto mb-4" />
+                <h3 style={serif} className="text-xl font-semibold text-foreground mb-2">Pengajuan Terkirim!</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Kamu mendapatkan <span className="font-semibold text-primary">+{success.points} poin</span> dan menghemat{" "}
+                  <span className="font-semibold text-primary">{success.co2Saved} kg CO₂</span>. Cek riwayatnya di dashboard-mu.
+                </p>
+                <div className="flex gap-3 justify-center">
+                  <button
+                    onClick={() => setSuccess(null)}
+                    className="px-5 py-2.5 border border-border rounded-xl text-sm font-medium hover:bg-muted transition-colors"
+                  >
+                    Ajukan Lagi
+                  </button>
+                  <Link
+                    to="/dashboard"
+                    className="px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors"
+                  >
+                    Lihat di Dashboard
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <>
+                {error && (
+                  <div className="mb-4 px-4 py-2.5 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 text-sm">
+                    {error}
+                  </div>
+                )}
+
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-foreground">Ukuran Kemasan</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {(Object.keys(sizeLabels) as ReturnSize[]).map((s) => (
+                        <button
+                          key={s}
+                          onClick={() => setSize(s)}
+                          className={`py-2.5 rounded-xl text-sm font-medium border transition-colors ${
+                            size === s
+                              ? "bg-primary text-primary-foreground border-primary"
+                              : "border-border text-foreground/70 hover:border-primary/40"
+                          }`}
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                    <p className="text-xs text-muted-foreground">{sizeLabels[size]}</p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-foreground">Jumlah Kemasan</label>
+                    <div className="flex items-center border border-border rounded-xl overflow-hidden w-fit">
+                      <button onClick={() => setQty(Math.max(1, qty - 1))} className="px-4 py-2.5 text-sm hover:bg-muted transition-colors">−</button>
+                      <span className="px-5 py-2.5 text-sm font-medium border-x border-border">{qty}</span>
+                      <button onClick={() => setQty(qty + 1)} className="px-4 py-2.5 text-sm hover:bg-muted transition-colors">+</button>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={handleSubmitReturn}
+                    disabled={submitting}
+                    className="w-full flex items-center justify-center gap-2 py-3.5 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {submitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" /> Memproses...
+                      </>
+                    ) : (
+                      <>Ajukan via WhatsApp</>
+                    )}
+                  </button>
+                  <p className="text-xs text-center text-muted-foreground">
+                    {user
+                      ? "Poin akan tersimpan di dashboard-mu, lalu kamu diarahkan ke WhatsApp untuk atur drop-point/pickup."
+                      : "Masuk dulu ke akunmu untuk mengajukan pengembalian."}
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -208,8 +351,6 @@ export function CircularReturn() {
           </div>
         </div>
       </section>
-
-      {/* CTA */}
       <section className="py-24 bg-secondary">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <Leaf className="w-10 h-10 text-primary/30 mx-auto mb-6" />

@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { X, Check, ShoppingBag, Star } from "lucide-react";
+import { useNavigate } from "react-router";
+import { X, Check, ShoppingBag, Star, Loader2 } from "lucide-react";
 import soapberryImg from "../../imports/Soapberry_Heritage.png";
 import citrusImg from "../../imports/Citrus_Harvest.png";
 import leraLogo from "../../imports/LERA__Eco-Dissolvable_Cleaning_Sheet.png";
+import { useAuth } from "../../lib/auth-context";
+import { createOrder } from "../../lib/firestore";
+import { LERA_WHATSAPP_NUMBER, openWhatsApp, reserveWhatsAppWindow } from "../../lib/whatsapp";
 
 const UNS = (id: string) => `https://images.unsplash.com/${id}?w=600&h=800&fit=crop&auto=format`;
 
@@ -389,12 +393,54 @@ export function Products() {
   const [activeFamily, setActiveFamily] = useState("All");
   const [selected, setSelected] = useState<Product | null>(null);
   const [qty, setQty] = useState(1);
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleCheckout = async () => {
+    if (!selected) return;
+
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    setCheckoutError("");
+    setCheckingOut(true);
+
+    // Reserve the tab synchronously (before any await) so the browser
+    // doesn't block the WhatsApp popup once the Firestore write resolves.
+    const waWindow = reserveWhatsAppWindow();
+
+    try {
+      const price = parseInt(selected.price.replace(/\D/g, ""), 10) || 0;
+      const userName = user.displayName || user.email || "Pelanggan LERA";
+
+      const order = await createOrder({
+        uid: user.uid,
+        userName,
+        items: [{ name: selected.name, qty, price }],
+      });
+
+      const message = `Halo LERA! 👋 Saya ingin konfirmasi pesanan:\n\n🧴 ${selected.name} x${qty}\n💰 Total: Rp ${order.total.toLocaleString("id-ID")}\n👤 Atas nama: ${userName}\n🆔 ID Pesanan: ${order.id}\n\nMohon info langkah pembayaran & pengirimannya. Terima kasih! 🌿`;
+
+      openWhatsApp(waWindow, LERA_WHATSAPP_NUMBER, message);
+      setSelected(null);
+      setQty(1);
+    } catch (err) {
+      console.error("Checkout failed:", err);
+      waWindow?.close();
+      setCheckoutError("Gagal membuat pesanan. Silakan coba lagi.");
+    } finally {
+      setCheckingOut(false);
+    }
+  };
 
   const filtered = activeFamily === "All" ? products : products.filter((p) => p.family === activeFamily);
 
   return (
     <div className="pt-16">
-      {/* Hero */}
       <section
         className="py-28 relative overflow-hidden"
         style={{ background: "radial-gradient(ellipse at 20% 60%, rgba(44,85,69,0.18) 0%, transparent 55%), radial-gradient(ellipse at 80% 30%, rgba(184,115,51,0.1) 0%, transparent 55%), #F4EFE6" }}
@@ -409,8 +455,6 @@ export function Products() {
           </p>
         </div>
       </section>
-
-      {/* Filters */}
       <section className="py-8 sticky top-16 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex gap-2 flex-wrap">
@@ -425,8 +469,6 @@ export function Products() {
           </div>
         </div>
       </section>
-
-      {/* Grid */}
       <section className="py-12 pb-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
@@ -473,7 +515,6 @@ export function Products() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="grid md:grid-cols-2">
-              {/* Visual — flat lay illustration */}
               <div className="h-72 md:h-auto md:min-h-[500px] relative bg-muted">
                 <ProductFlatlay p={selected} modalSize />
                 {/* Family badge */}
@@ -529,18 +570,39 @@ export function Products() {
                     <div style={serif} className="text-2xl font-semibold text-foreground">Rp {(parseInt(selected.price.replace(/\D/g, "")) * qty).toLocaleString("id-ID")}</div>
                     <div className="text-xs text-muted-foreground">{selected.sheets} lembar / kotak</div>
                   </div>
+                  {checkoutError && (
+                    <div className="mb-3 px-3 py-2 rounded-lg bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 text-xs">
+                      {checkoutError}
+                    </div>
+                  )}
                   <div className="flex gap-3 items-center mb-4">
                     <div className="flex items-center border border-border rounded-xl overflow-hidden">
                       <button onClick={() => setQty(Math.max(1, qty - 1))} className="px-4 py-2.5 text-sm hover:bg-muted transition-colors">−</button>
                       <span className="px-4 py-2.5 text-sm font-medium border-x border-border">{qty}</span>
                       <button onClick={() => setQty(qty + 1)} className="px-4 py-2.5 text-sm hover:bg-muted transition-colors">+</button>
                     </div>
-                    <button className="flex-1 flex items-center justify-center gap-2 py-3 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors">
-                      <ShoppingBag className="w-4 h-4" />
-                      Tambah ke Keranjang
+                    <button
+                      onClick={handleCheckout}
+                      disabled={checkingOut}
+                      className="flex-1 flex items-center justify-center gap-2 py-3 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                      {checkingOut ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" /> Memproses...
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingBag className="w-4 h-4" />
+                          Checkout via WhatsApp
+                        </>
+                      )}
                     </button>
                   </div>
-                  <p className="text-xs text-center text-muted-foreground">Gratis ongkir di atas Rp 150.000 · Pengiriman 2–5 hari kerja</p>
+                  <p className="text-xs text-center text-muted-foreground">
+                    {user
+                      ? "Pesanan akan tersimpan di dashboard-mu, lalu kamu diarahkan ke WhatsApp untuk konfirmasi pembayaran & pengiriman."
+                      : "Masuk dulu ke akunmu untuk checkout — kamu akan diarahkan ke halaman login."}
+                  </p>
                 </div>
               </div>
             </div>

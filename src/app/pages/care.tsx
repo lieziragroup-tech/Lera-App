@@ -84,7 +84,6 @@ export function Care() {
 
   return (
     <div className="pb-20 md:pb-0">
-      {/* Hero */}
       <section className="bg-gradient-to-br from-[#9AB0A8] to-[#5A7067] text-white py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -95,8 +94,6 @@ export function Care() {
           </div>
         </div>
       </section>
-
-      {/* Main Content */}
       <section className="py-12">
         <div className="container mx-auto px-4">
           <Tabs defaultValue="events" className="max-w-6xl mx-auto">
@@ -212,8 +209,6 @@ export function Care() {
                   </Card>
                 ))}
               </div>
-
-              {/* CTA Card */}
               <Card className="bg-gradient-to-br from-[#5A7067] to-[#7A9088] text-white border-0">
                 <CardContent className="p-8">
                   <div className="flex flex-col md:flex-row items-center gap-6">

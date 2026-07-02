@@ -51,7 +51,6 @@ export function AIAssistant() {
 
   return (
     <div className="pt-16">
-      {/* Header */}
       <section
         className="py-20"
         style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(44,85,69,0.12) 0%, transparent 60%), #F4EFE6" }}

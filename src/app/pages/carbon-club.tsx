@@ -43,7 +43,6 @@ export function CarbonClub() {
 
   return (
     <div className="pt-16">
-      {/* Hero */}
       <section
         className="py-28 relative overflow-hidden"
         style={{ background: "radial-gradient(ellipse at 20% 60%, rgba(44,85,69,0.2) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(184,115,51,0.1) 0%, transparent 55%), #F4EFE6" }}

@@ -441,7 +441,6 @@ export function Products() {
 
   return (
     <div className="pt-16">
-      {/* Hero */}
       <section
         className="py-28 relative overflow-hidden"
         style={{ background: "radial-gradient(ellipse at 20% 60%, rgba(44,85,69,0.18) 0%, transparent 55%), radial-gradient(ellipse at 80% 30%, rgba(184,115,51,0.1) 0%, transparent 55%), #F4EFE6" }}
@@ -456,8 +455,6 @@ export function Products() {
           </p>
         </div>
       </section>
-
-      {/* Filters */}
       <section className="py-8 sticky top-16 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex gap-2 flex-wrap">
@@ -472,8 +469,6 @@ export function Products() {
           </div>
         </div>
       </section>
-
-      {/* Grid */}
       <section className="py-12 pb-28">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
@@ -520,7 +515,6 @@ export function Products() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="grid md:grid-cols-2">
-              {/* Visual — flat lay illustration */}
               <div className="h-72 md:h-auto md:min-h-[500px] relative bg-muted">
                 <ProductFlatlay p={selected} modalSize />
                 {/* Family badge */}

@@ -1,4 +1,4 @@
-import { collection, addDoc, query, where, onSnapshot, serverTimestamp, DocumentData } from "firebase/firestore";
+import { collection, addDoc, query, where, onSnapshot, serverTimestamp, DocumentData, orderBy, limit } from "firebase/firestore";
 import { db } from "./firebase";
 
 export type OrderItem = { name: string; qty: number; price: number };
@@ -127,7 +127,12 @@ export async function createReturn(params: {
 
 /** Realtime subscription to the signed-in user's orders (newest first). */
 export function subscribeUserOrders(uid: string, cb: (orders: Order[]) => void) {
-  const q = query(collection(db, "orders"), where("uid", "==", uid));
+  const q = query(
+    collection(db, "orders"),
+    where("uid", "==", uid),
+    orderBy("createdAt", "desc"),
+    limit(20)
+  );
   return onSnapshot(
     q,
     (snap) => {
@@ -144,7 +149,12 @@ export function subscribeUserOrders(uid: string, cb: (orders: Order[]) => void) 
 
 /** Realtime subscription to the signed-in user's packaging returns (newest first). */
 export function subscribeUserReturns(uid: string, cb: (returns: ReturnEntry[]) => void) {
-  const q = query(collection(db, "returns"), where("uid", "==", uid));
+  const q = query(
+    collection(db, "returns"),
+    where("uid", "==", uid),
+    orderBy("createdAt", "desc"),
+    limit(20)
+  );
   return onSnapshot(
     q,
     (snap) => {

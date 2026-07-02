@@ -39,7 +39,6 @@ export function Articles() {
 
   return (
     <div className="pt-16">
-      {/* Header */}
       <section className="py-24 bg-secondary/30">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-xs font-medium tracking-widest uppercase text-accent mb-4">Blog & Wawasan</p>
@@ -93,8 +92,6 @@ export function Articles() {
           </div>
         </div>
       </section>
-
-      {/* Filters */}
       <section className="py-4">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-wrap gap-2">
@@ -114,8 +111,6 @@ export function Articles() {
           </div>
         </div>
       </section>
-
-      {/* Grid */}
       <section className="py-10 pb-24">
         <div className="max-w-7xl mx-auto px-6">
           {filtered.length === 0 ? (
@@ -147,8 +142,6 @@ export function Articles() {
           )}
         </div>
       </section>
-
-      {/* Newsletter */}
       <section className="py-20 bg-foreground text-background">
         <div className="max-w-xl mx-auto px-6 text-center">
           <h2 style={serif} className="text-3xl font-semibold mb-4">Jangan Lewatkan Cerita Berikutnya</h2>

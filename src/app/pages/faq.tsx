@@ -179,7 +179,6 @@ export function FAQ() {
 
   return (
     <div className="pb-20 md:pb-0">
-      {/* Hero */}
       <section className="bg-gradient-to-br from-[#5A7067] to-[#7A9088] text-white py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">

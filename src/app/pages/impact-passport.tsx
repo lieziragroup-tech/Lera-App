@@ -50,7 +50,6 @@ const maxCo2 = Math.max(...passportData.monthlyData.map((d) => d.co2));
 export function ImpactPassport() {
   return (
     <div className="pt-16">
-      {/* Header */}
       <section
         className="py-24"
         style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(44,85,69,0.12) 0%, transparent 60%), #F4EFE6" }}
@@ -71,7 +70,6 @@ export function ImpactPassport() {
           {/* Passport Card */}
           <div className="bg-gradient-to-br from-primary to-teal-700 rounded-3xl overflow-hidden mb-8 text-primary-foreground shadow-2xl">
             <div className="p-8 md:p-10">
-              {/* Header */}
               <div className="flex items-start justify-between mb-8">
                 <div>
                   <div className="text-primary-foreground/50 text-xs font-medium tracking-widest uppercase mb-2">LERA Impact Passport</div>
@@ -109,8 +107,6 @@ export function ImpactPassport() {
                   ))}
                 </div>
               </div>
-
-              {/* Footer */}
               <div className="mt-6 pt-6 border-t border-white/15 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Leaf className="w-4 h-4 text-primary-foreground/50" />
@@ -163,8 +159,6 @@ export function ImpactPassport() {
               ))}
             </div>
           </div>
-
-          {/* Timeline */}
           <div>
             <h2 style={serif} className="text-2xl font-semibold text-foreground mb-6">Aktivitas Terbaru</h2>
             <div className="bg-card border border-border rounded-2xl overflow-hidden">

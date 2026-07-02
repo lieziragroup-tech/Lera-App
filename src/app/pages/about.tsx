@@ -13,10 +13,10 @@ const values = [
 ];
 
 const milestones = [
-  { year: "2022", event: "LERA didirikan di Bandung dengan visi menciptakan produk pembersih tanpa plastik dari bahan lokal Indonesia." },
-  { year: "2023", event: "Peluncuran 3 varian pertama: Citrus Harvest, Jasmine Bloom, dan Coconut Breeze. 5.000 pengguna awal dalam 3 bulan." },
-  { year: "2024", event: "Ekspansi ke 8 varian Seasonal Harvest Collection. Diluncurkannya platform digital dengan Carbon Impact Tracker." },
-  { year: "2026", event: "Mencapai 120.000 pengguna aktif. Peluncuran Circular Return System dan LERA Impact Passport. Ekspansi ke Asia Tenggara." },
+  { year: "2026", event: "• Mengembangkan prototipe produk\n• Membangun MVP (Minimum Viable Product) dari platform digital\n• Pengujian percontohan dengan pengguna awal" },
+  { year: "2027", event: "• Luncurkan tiga Koleksi Panen Musiman pertama\n• Memperkenalkan Pelacak Dampak Karbon\n• Raih 5.000 pengguna awal" },
+  { year: "2028", event: "• Diperluas menjadi delapan Koleksi Panen Musiman\n• Luncurkan Sistem Pengembalian Melingkar\n• Rilis Paspor Dampak LERA" },
+  { year: "2029", event: "• Ekspansi ke pasar Global\n• Meningkatkan skala melalui kemitraan ritel dan e-commerce" },
 ];
 
 const team = [
@@ -30,7 +30,6 @@ const team = [
 export function About() {
   return (
     <div className="pt-16">
-      {/* Hero */}
       <section
         className="py-32 relative overflow-hidden"
         style={{ background: "radial-gradient(ellipse at 20% 50%, rgba(44,85,69,0.15) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(184,115,51,0.08) 0%, transparent 60%), #F4EFE6" }}
@@ -60,21 +59,16 @@ export function About() {
           </div>
         </div>
       </section>
-
-      {/* Mission */}
       <section className="py-24 bg-foreground text-background">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <p className="text-xs font-medium tracking-widest uppercase text-background/40 mb-4">Misi Kami</p>
               <h2 style={serif} className="text-4xl md:text-5xl font-semibold mb-6 leading-tight">
-                Menjadi Climate-Tech Consumer Brand Terdepan di Asia Tenggara
+                Climate-Tech Consumer Brand yang Menginspirasi Transisi Menuju Masa Depan Rendah Karbon
               </h2>
-              <p className="text-background/60 leading-relaxed mb-6">
-                LERA berkomitmen mendukung SDG 12 PBB melalui integrasi produk fisik yang ramah lingkungan dengan platform digital berbasis data yang memungkinkan setiap pengguna mengukur dan memaksimalkan dampak positifnya.
-              </p>
               <p className="text-background/60 leading-relaxed">
-                Kami tidak hanya menjual produk — kami membangun ekosistem konsumsi bertanggung jawab yang mengubah kebiasaan sehari-hari menjadi kontribusi nyata bagi kelestarian planet.
+                Kami tidak hanya menghadirkan produk, tetapi juga membangun ekosistem konsumsi yang bertanggung jawab, di mana setiap pilihan dan kebiasaan sehari-hari dapat memberikan kontribusi nyata bagi kelestarian planet.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -93,8 +87,6 @@ export function About() {
           </div>
         </div>
       </section>
-
-      {/* Values */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -114,12 +106,10 @@ export function About() {
           </div>
         </div>
       </section>
-
-      {/* Timeline */}
       <section className="py-24 bg-secondary/40">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="text-xs font-medium tracking-widest uppercase text-accent mb-3">Perjalanan Kami</p>
+            <p className="text-xs font-medium tracking-widest uppercase text-accent mb-3">Peta Jalan LERA</p>
             <h2 style={serif} className="text-4xl font-semibold text-foreground">Dari Ide ke Gerakan</h2>
           </div>
           <div className="space-y-0">
@@ -135,15 +125,13 @@ export function About() {
                 </div>
                 <div className="pb-10">
                   <div style={serif} className="text-2xl font-bold text-primary mb-2">{m.year}</div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{m.event}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{m.event}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
-
-      {/* Team */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -164,8 +152,6 @@ export function About() {
           </div>
         </div>
       </section>
-
-      {/* CTA */}
       <section className="py-24 bg-primary text-primary-foreground">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 style={serif} className="text-4xl font-semibold mb-6">Bersama, Kita Bisa Mengubah Industri</h2>

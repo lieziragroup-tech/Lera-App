@@ -117,7 +117,6 @@ const features = [
 export function Platform() {
   return (
     <div className="pt-16">
-      {/* Hero */}
       <section
         className="py-32 relative overflow-hidden"
         style={{ background: "radial-gradient(ellipse at 20% 50%, rgba(44,85,69,0.15) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(184,115,51,0.08) 0%, transparent 60%), #F4EFE6" }}
@@ -164,7 +163,6 @@ export function Platform() {
               id={f.id}
               className={`grid md:grid-cols-2 gap-14 items-center py-16 ${i < features.length - 1 ? "border-b border-border" : ""}`}
             >
-              {/* Visual side */}
               <div className={i % 2 === 1 ? "md:order-2" : ""}>
                 <div className={`rounded-3xl overflow-hidden aspect-video flex items-center justify-center bg-gradient-to-br ${f.color}`}>
                   <div className="text-center text-white p-10">
@@ -206,8 +204,6 @@ export function Platform() {
           ))}
         </div>
       </section>
-
-      {/* CTA */}
       <section className="py-24 bg-secondary">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <p className="text-xs font-medium tracking-widest uppercase text-accent mb-4">Mulai Sekarang</p>

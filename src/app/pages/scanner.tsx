@@ -68,7 +68,6 @@ export function Scanner() {
 
   return (
     <div className="pb-20 md:pb-0">
-      {/* Hero */}
       <section className="bg-gradient-to-br from-[#5A7067] via-[#6A8077] to-[#7A9088] text-white py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -83,8 +82,6 @@ export function Scanner() {
           </div>
         </div>
       </section>
-
-      {/* Main Content */}
       <section className="py-12">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="grid md:grid-cols-2 gap-8">

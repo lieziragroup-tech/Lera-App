@@ -61,7 +61,6 @@ const faqs = [
 export function HowItWorks() {
   return (
     <div className="pt-16">
-      {/* Hero */}
       <section
         className="py-28"
         style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(44,85,69,0.12) 0%, transparent 60%), #F4EFE6" }}
@@ -149,8 +148,6 @@ export function HowItWorks() {
           </div>
         </div>
       </section>
-
-      {/* CTA */}
       <section className="py-24 bg-foreground text-background">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <Leaf className="w-10 h-10 text-background/30 mx-auto mb-6" />

@@ -54,7 +54,6 @@ export function Home() {
 
   return (
     <div className="overflow-x-hidden">
-      {/* Hero */}
       <section
         className="min-h-[100svh] flex flex-col justify-center relative pt-16"
         style={{ background: "radial-gradient(ellipse at 15% 80%, rgba(44,85,69,0.22) 0%, transparent 52%), radial-gradient(ellipse at 85% 15%, rgba(184,115,51,0.13) 0%, transparent 52%), radial-gradient(ellipse at 55% 55%, rgba(44,85,69,0.07) 0%, transparent 65%), #F4EFE6" }}
@@ -222,9 +221,6 @@ export function Home() {
           </div>
         </div>
       </section>
-
-
-      {/* Platform */}
       <section className="py-28 lg:py-36 bg-foreground text-background relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full filter blur-[100px] opacity-50" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/20 rounded-full filter blur-[100px] opacity-50" />
@@ -369,8 +365,6 @@ export function Home() {
           </div>
         </div>
       </section>
-
-      {/* CTA */}
       <section className="py-32 lg:py-40 bg-secondary relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 mix-blend-overlay" />
         <div className="max-w-3xl mx-auto px-6 text-center relative z-10">

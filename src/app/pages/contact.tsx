@@ -48,7 +48,6 @@ export function Contact() {
 
   return (
     <div className="pt-16">
-      {/* Header */}
       <section className="py-24" style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(44,85,69,0.1) 0%, transparent 60%), #F4EFE6" }}>
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-xs font-medium tracking-widest uppercase text-accent mb-4">Hubungi Kami</p>
