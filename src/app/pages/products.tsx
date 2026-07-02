@@ -7,8 +7,8 @@ import lemongrassImg from "../../imports/Lemongrass_Refresh.jpeg";
 import patchouliImg from "../../imports/Patchouli_Essence.jpeg";
 import coffeeImg from "../../imports/Coffee_Revival_1.jpeg";
 import cocoaImg from "../../imports/Cocoa_Harmony.jpeg";
-import coconutbreeze from "../../imports/coconutbreeze.jpeg";
-import jasminebloom from "../../imports/jasminebloom.";
+import coconutbreezeImg from "../../imports/Coconut_Breeze.jpeg";
+import jasminebloomImg from "../../imports/Jasmine_Bloom.jpeg";
 import leraLogo from "../../imports/LERA__Eco-Dissolvable_Cleaning_Sheet.png";
 import { useAuth } from "../../lib/auth-context";
 import { createOrder } from "../../lib/firestore";
@@ -23,9 +23,9 @@ const productPhotos: Record<number, string> = {
   3: soapberryImg,   // Soapberry Heritage
   4: patchouliImg,   // Patchouli Essence
   5: coffeeImg,      // Coffee Revival
-  6: coconutbreeze, // Coconut Breeze
+  6: coconutbreezeImg, // Coconut Breeze
   7: cocoaImg,       // Cocoa Harmony
-  8: jasminebloom, // Jasmine Bloom
+  8: jasminebloomImg, // Jasmine Bloom
 };
 
 const serif = { fontFamily: "'Playfair Display', Georgia, serif" };
