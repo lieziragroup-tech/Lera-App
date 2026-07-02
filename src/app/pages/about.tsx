@@ -155,7 +155,7 @@ export function About() {
       <section className="py-24 bg-primary text-primary-foreground">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 style={serif} className="text-4xl font-semibold mb-6">Bersama, Kita Bisa Mengubah Industri</h2>
-          <p className="text-primary-foreground/65 mb-10 leading-relaxed">Setiap lembar LERA yang Anda gunakan adalah bukti bahwa konsumsi yang bertanggung jawab bukan sekadar pilihan — itu adalah masa depan.</p>
+          <p className="text-primary-foreground/65 mb-10 leading-relaxed">Setiap lembar LERA yang Anda gunakan adalah bukti bahwa konsumsi yang bertanggung jawab bukan sekadar pilihan itu adalah masa depan.</p>
           <Link to="/products" className="inline-flex items-center gap-2 px-8 py-4 bg-primary-foreground text-primary rounded-full font-medium hover:bg-primary-foreground/90 transition-all hover:gap-3">
             Mulai Perjalanan <ArrowRight className="w-4 h-4" />
           </Link>

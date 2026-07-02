@@ -11,7 +11,7 @@ const serif = { fontFamily: "'Playfair Display', Georgia, serif" };
 const platformFeatures = [
   { name: "Carbon Impact Tracker", desc: "Monitor real-time resource savings and emissions reduced.", Icon: BarChart3, href: "/platform" },
   { name: "Circular Return System", desc: "Scan QR on empty packaging and earn reward points.", Icon: Recycle, href: "/circular-return" },
-  { name: "Impact Passport", desc: "Annual digital impact report — yours to download and share.", Icon: Award, href: "/impact-passport" },
+  { name: "Impact Passport", desc: "Annual digital impact report yours to download and share.", Icon: Award, href: "/impact-passport" },
   { name: "Carbon Club", desc: "Community challenges, levels, and sustainability leaderboards.", Icon: Users, href: "/carbon-club" },
   { name: "AI Eco Assistant", desc: "Smart guidance for an eco-conscious lifestyle.", Icon: Bot, href: "/ai-assistant" },
   { name: "Eco Community Hub", desc: "Connect with fellow green advocates across Indonesia.", Icon: Leaf, href: "/platform" },
@@ -291,7 +291,7 @@ export function Home() {
           <Reveal direction="up">
             <p className="text-xs font-bold tracking-widest uppercase text-primary-foreground/60 mb-12">Komitmen Kami</p>
             <blockquote style={serif} className="text-3xl md:text-4xl lg:text-5xl font-medium italic leading-tight mb-10">
-              "Setiap lembar adalah aksi kecil melawan budaya plastik — dan surat cinta untuk tanah yang menumbuhkannya."
+              "Setiap lembar adalah aksi kecil melawan budaya plastik dan surat cinta untuk tanah yang menumbuhkannya."
             </blockquote>
             <p className="text-primary-foreground/70 text-sm md:text-base font-medium tracking-wide uppercase">— Pendiri, LERA</p>
           </Reveal>

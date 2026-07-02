@@ -12,7 +12,7 @@ const steps = [
     step: "01",
     icon: Package,
     title: "Habiskan Lembaranmu",
-    desc: "Gunakan semua lembaran LERA hingga habis. Kemasan kosong tetap memiliki nilai — jangan dibuang!",
+    desc: "Gunakan semua lembaran LERA hingga habis. Kemasan kosong tetap memiliki nilai jangan dibuang!",
     detail: "Kemasan LERA terbuat dari material food-grade yang bisa digunakan hingga 50 kali pengisian ulang.",
   },
   {
@@ -128,7 +128,7 @@ export function CircularReturn() {
             Circular Return System
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-10">
-            Kemasan kosongmu bukan sampah — itu adalah tiket reward. Scan, kembalikan, dan dapatkan poin untuk ditukar dengan refill gratis atau reward lainnya.
+            Kemasan kosongmu bukan sampah itu adalah tiket reward. Scan, kembalikan, dan dapatkan poin untuk ditukar dengan refill gratis atau reward lainnya.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to="/products" className="inline-flex items-center gap-2 px-7 py-3.5 bg-primary text-primary-foreground rounded-full font-medium text-sm hover:bg-primary/90 transition-all hover:gap-3">

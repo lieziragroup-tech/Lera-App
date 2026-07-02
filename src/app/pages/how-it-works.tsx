@@ -8,7 +8,7 @@ const mainSteps = [
     step: "01",
     icon: Package,
     title: "Pilih Lembaranmu",
-    subtitle: "Seasonal Harvest Collection — 8 Aroma",
+    subtitle: "Seasonal Harvest Collection 8 Aroma",
     desc: "Setiap kotak LERA berisi 30 lembar pembersih tipis berukuran kartu kredit. Pilih aroma yang sesuai dengan suasana hati atau kebutuhanmu: mulai dari Citrus Harvest yang menyegarkan di pagi hari hingga Jasmine Bloom yang menenangkan sebelum tidur.",
     tips: ["Satu lembar cukup untuk satu penggunaan penuh", "Simpan di tempat kering, jauh dari kelembapan", "Kadaluarsa 24 bulan dari tanggal produksi"],
     img: "photo-1556909114-f6e7ad7d3136",
@@ -27,7 +27,7 @@ const mainSteps = [
     icon: Sparkles,
     title: "Bersihkan & Rasakan",
     subtitle: "Busa efektif, formula lembut",
-    desc: "Formula LERA bekerja efektif membersihkan kotoran dan kuman tanpa merusak lapisan pelindung alami kulit (skin barrier). Kandungan botanis aktif memberikan manfaat tambahan: melembapkan, mencerahkan, atau menenangkan — tergantung varian yang kamu pilih.",
+    desc: "Formula LERA bekerja efektif membersihkan kotoran dan kuman tanpa merusak lapisan pelindung alami kulit (skin barrier). Kandungan botanis aktif memberikan manfaat tambahan: melembapkan, mencerahkan, atau menenangkan tergantung varian yang kamu pilih.",
     tips: ["Bilas hingga bersih dengan air mengalir", "Cocok untuk semua jenis kulit termasuk sensitif", "Formula bebas SLS, paraben, dan pewarna sintetis"],
     img: "photo-1515694346937-94d85e41e6f0",
   },
@@ -71,7 +71,7 @@ export function HowItWorks() {
             Cara Kerja LERA
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            Dari lembar tipis ke busa lembut yang efektif — panduan lengkap menggunakan LERA untuk kehidupan sehari-hari yang lebih bersih dan lebih hijau.
+            Dari lembar tipis ke busa lembut yang efektif, panduan lengkap menggunakan LERA untuk kehidupan sehari-hari yang lebih bersih dan lebih hijau.
           </p>
         </div>
       </section>
@@ -152,7 +152,7 @@ export function HowItWorks() {
         <div className="max-w-3xl mx-auto px-6 text-center">
           <Leaf className="w-10 h-10 text-background/30 mx-auto mb-6" />
           <h2 style={serif} className="text-4xl font-semibold mb-6">Siap Memulai?</h2>
-          <p className="text-background/55 mb-10 leading-relaxed">Bergabunglah dengan ribuan pengguna yang telah merasakan manfaat ganda dari LERA — kulit yang bersih, bumi yang lebih hijau.</p>
+          <p className="text-background/55 mb-10 leading-relaxed">Bergabunglah dengan ribuan pengguna yang telah merasakan manfaat ganda dari LERA, kulit yang bersih, bumi yang lebih hijau.</p>
           <Link to="/products" className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-all hover:gap-3">
             Pilih Koleksimu <ArrowRight className="w-4 h-4" />
           </Link>

@@ -36,11 +36,11 @@ const passportData = {
     { title: "Forest Guardian", desc: "Mencapai 10.000 poin", date: "Feb 2026", icon: "🏕️" },
   ],
   timeline: [
-    { date: "15 Jun 2026", action: "Scan QR Kemasan — Citrus Harvest", points: "+15 pts" },
+    { date: "15 Jun 2026", action: "Scan QR Kemasan Citrus Harvest", points: "+15 pts" },
     { date: "12 Jun 2026", action: "Selesai: Tantangan Zero Plastic Week", points: "+150 pts" },
     { date: "8 Jun 2026", action: "Pembelian: Jasmine Bloom × 2", points: "+40 pts" },
     { date: "1 Jun 2026", action: "Bonus Bulanan Forest Guardian", points: "+100 pts" },
-    { date: "28 Mei 2026", action: "Scan QR Kemasan — Coffee Revival", points: "+15 pts" },
+    { date: "28 Mei 2026", action: "Scan QR Kemasan Coffee Revival", points: "+15 pts" },
     { date: "20 Mei 2026", action: "Selesai: Tantangan Community Share", points: "+80 pts" },
   ],
 };
