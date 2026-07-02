@@ -2,7 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { X, Check, ShoppingBag, Star, Loader2 } from "lucide-react";
 import soapberryImg from "../../imports/Soapberry_Heritage.png";
-import citrusImg from "../../imports/Citrus_Harvest.png";
+import citrusImg from "../../imports/Citrus_Harvest_1.jpeg";
+import lemongrassImg from "../../imports/Lemongrass_Refresh.jpeg";
+import patchouliImg from "../../imports/Patchouli_Essence.jpeg";
+import coffeeImg from "../../imports/Coffee_Revival_1.jpeg";
+import cocoaImg from "../../imports/Cocoa_Harmony.jpeg";
 import leraLogo from "../../imports/LERA__Eco-Dissolvable_Cleaning_Sheet.png";
 import { useAuth } from "../../lib/auth-context";
 import { createOrder } from "../../lib/firestore";
@@ -12,14 +16,14 @@ const UNS = (id: string) => `https://images.unsplash.com/${id}?w=600&h=800&fit=c
 
 // Photo per product id — actual photos take priority over CSS flat lay
 const productPhotos: Record<number, string> = {
-  1: citrusImg,
-  2: UNS("photo-1709575832758-1292590197fa"),
-  3: soapberryImg,
-  4: UNS("photo-1779206727993-7012ece9461f"),
-  5: UNS("photo-1690983323399-a7848f09bfb9"),
-  6: UNS("photo-1548808889-bbbd02e9096d"),
-  7: UNS("photo-1610450949065-1f2841536c88"),
-  8: UNS("photo-1623171404570-1d196759fe20"),
+  1: citrusImg,      // Citrus Harvest
+  2: lemongrassImg,  // Lemongrass Refresh
+  3: soapberryImg,   // Soapberry Heritage
+  4: patchouliImg,   // Patchouli Essence
+  5: coffeeImg,      // Coffee Revival
+  6: UNS("photo-1548808889-bbbd02e9096d"), // Coconut Breeze
+  7: cocoaImg,       // Cocoa Harmony
+  8: UNS("photo-1623171404570-1d196759fe20"), // Jasmine Bloom
 };
 
 const serif = { fontFamily: "'Playfair Display', Georgia, serif" };
@@ -44,7 +48,7 @@ const products: Product[] = [
     id: 1, name: "Citrus Harvest", family: "Citrus",
     from: "#F4A835", to: "#D4621A",
     tagline: "Bright. Invigorating. Pure.",
-    desc: "Cold-pressed citrus oils from highland orchards of Jawa Barat. Each sheet releases a burst of sweet orange, bergamot, and fresh lemon zest the perfect morning ritual for an energized start.",
+    desc: "Cold-pressed citrus oils from highland orchards of Jawa Barat. Each sheet releases a burst of sweet orange, bergamot, and fresh lemon zest — the perfect morning ritual for an energized start.",
     notes: ["Sweet Orange", "Bergamot", "Lemon Zest"], benefit: "Deep cleansing + mood-lifting",
     price: "Rp 45.000", sheets: 30,
     marbleBg: "radial-gradient(ellipse at 25% 30%, #FFF0C0 0%, #FDDEA0 40%, #F8CC80 100%)",
@@ -65,7 +69,7 @@ const products: Product[] = [
     id: 2, name: "Lemongrass Refresh", family: "Herbal",
     from: "#7BB87A", to: "#4A8A50",
     tagline: "Fresh. Clean. Revitalizing.",
-    desc: "Steam-distilled lemongrass from the fertile highlands of Jawa Tengah. Crisp and herbaceous, this sheet purifies and revitalizes a clean slate for body and mind.",
+    desc: "Steam-distilled lemongrass from the fertile highlands of Jawa Tengah. Crisp and herbaceous, this sheet purifies and revitalizes — a clean slate for body and mind.",
     notes: ["Lemongrass", "Green Tea", "Spearmint"], benefit: "Antibacterial + refreshing",
     price: "Rp 42.000", sheets: 30,
     marbleBg: "radial-gradient(ellipse at 25% 30%, #E8F8E0 0%, #D0ECC0 40%, #B8E0A0 100%)",
@@ -86,7 +90,7 @@ const products: Product[] = [
     id: 3, name: "Soapberry Heritage", family: "Earthy",
     from: "#C4956A", to: "#8B5E3C",
     tagline: "Traditional. Gentle. Grounding.",
-    desc: "Lerak (soapberry) has been the cleansing secret of Javanese royalty for centuries. This heritage formula offers extraordinary lather from Indonesia's own natural surfactant gentle enough for daily use.",
+    desc: "Lerak (soapberry) has been the cleansing secret of Javanese royalty for centuries. This heritage formula offers extraordinary lather from Indonesia's own natural surfactant — gentle enough for daily use.",
     notes: ["Lerak Extract", "Warm Earth", "Sandalwood"], benefit: "Natural surfactant + skin-gentle",
     price: "Rp 48.000", sheets: 30,
     marbleBg: "", dots: []
@@ -160,7 +164,7 @@ const products: Product[] = [
     id: 7, name: "Cocoa Harmony", family: "Sweet",
     from: "#9A6030", to: "#3E1E08",
     tagline: "Warm. Indulgent. Harmonious.",
-    desc: "Raw cacao from the rainforests of Kalimantan brings natural antioxidants and a deep, comforting warmth. Indulgence without compromise for those who believe cleansing should be a pleasure.",
+    desc: "Raw cacao from the rainforests of Kalimantan brings natural antioxidants and a deep, comforting warmth. Indulgence without compromise — for those who believe cleansing should be a pleasure.",
     notes: ["Raw Cacao", "Tonka Bean", "Warm Musk"], benefit: "Antioxidant-rich + nourishing",
     price: "Rp 47.000", sheets: 30,
     marbleBg: "radial-gradient(ellipse at 25% 30%, #F5E8D0 0%, #E8D0B0 40%, #D8B888 100%)",
@@ -181,7 +185,7 @@ const products: Product[] = [
     id: 8, name: "Jasmine Bloom", family: "Floral",
     from: "#E8A5B0", to: "#B85870",
     tagline: "Delicate. Feminine. Timeless.",
-    desc: "Hand-picked jasmine sambac from the flower farms of Jawa Timur, harvested at dawn when the fragrance peaks. A timeless floral for every evening ritual delicate, lasting, and truly Indonesian.",
+    desc: "Hand-picked jasmine sambac from the flower farms of Jawa Timur, harvested at dawn when the fragrance peaks. A timeless floral for every evening ritual — delicate, lasting, and truly Indonesian.",
     notes: ["Jasmine Sambac", "Rose Water", "White Peony"], benefit: "Skin-brightening + calming",
     price: "Rp 50.000", sheets: 30,
     marbleBg: "radial-gradient(ellipse at 25% 30%, #FFF5F8 0%, #FFE8EE 40%, #FFD8E8 100%)",
@@ -451,7 +455,7 @@ export function Products() {
             Seasonal Harvest Collection
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            Delapan aroma edisi terbatas terinspirasi dari musim panen bahan-bahan alami lokal Indonesia terbaik dari citrus pegunungan hingga jasmine fajar.
+            Delapan aroma edisi terbatas terinspirasi dari musim panen bahan-bahan alami lokal Indonesia terbaik — dari citrus pegunungan hingga jasmine fajar.
           </p>
         </div>
       </section>
@@ -601,7 +605,7 @@ export function Products() {
                   <p className="text-xs text-center text-muted-foreground">
                     {user
                       ? "Pesanan akan tersimpan di dashboard-mu, lalu kamu diarahkan ke WhatsApp untuk konfirmasi pembayaran & pengiriman."
-                      : "Masuk dulu ke akunmu untuk checkout kamu akan diarahkan ke halaman login."}
+                      : "Masuk dulu ke akunmu untuk checkout — kamu akan diarahkan ke halaman login."}
                   </p>
                 </div>
               </div>
