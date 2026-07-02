@@ -1,5 +1,11 @@
 import soapberryImg from "../../imports/Soapberry_Heritage.png";
-import citrusImg from "../../imports/Citrus_Harvest.png";
+import citrusImg from "../../imports/Citrus_Harvest_1.jpeg";
+import lemongrassImg from "../../imports/Lemongrass_Refresh.jpeg";
+import patchouliImg from "../../imports/Patchouli_Essence.jpeg";
+import coffeeImg from "../../imports/Coffee_Revival_1.jpeg";
+import cocoaImg from "../../imports/Cocoa_Harmony.jpeg";
+import coconutbreezeImg from "../../imports/Coconut_Breeze.jpeg";
+import jasminebloomImg from "../../imports/Jasmine_Bloom.jpeg";
 import leraLogo from "../../imports/LERA__Eco-Dissolvable_Cleaning_Sheet.png";
 
 const UNS = (id: string, w = 600, h = 800) =>
@@ -46,7 +52,7 @@ export const productVisuals: ProductVisual[] = [
   {
     id: 2, name: "Lemongrass Refresh", family: "Herbal",
     from: "#7BB87A", to: "#4A8A50", price: "Rp 42.000", tagline: "Fresh. Clean. Revitalizing.",
-    photo: UNS("photo-1709575832758-1292590197fa"),
+    photo: lemongrassImg,
     marbleBg: "radial-gradient(ellipse at 25% 30%, #E8F8E0 0%, #D0ECC0 40%, #B8E0A0 100%)",
     dots: [
       { x: "62%", y: "12%", w: 9, h: 65, bg: "#8DC860", radius: "6px", rotate: "12deg", opacity: 0.9 },
@@ -66,7 +72,7 @@ export const productVisuals: ProductVisual[] = [
   {
     id: 4, name: "Patchouli Essence", family: "Earthy",
     from: "#9B7BB0", to: "#5E3E72", price: "Rp 50.000", tagline: "Deep. Resinous. Grounding.",
-    photo: UNS("photo-1779206727993-7012ece9461f"),
+    photo: patchouliImg,
     marbleBg: "radial-gradient(ellipse at 25% 30%, #F0E8F8 0%, #E0D0F0 40%, #C8B8E0 100%)",
     dots: [
       { x: "62%", y: "18%", w: 42, h: 22, bg: "#4A3060", radius: "50%", rotate: "25deg", opacity: 0.85 },
@@ -80,7 +86,7 @@ export const productVisuals: ProductVisual[] = [
   {
     id: 5, name: "Coffee Revival", family: "Spiced",
     from: "#8B6040", to: "#4E2C12", price: "Rp 45.000", tagline: "Bold. Energizing. Awakening.",
-    photo: UNS("photo-1690983323399-a7848f09bfb9"),
+    photo: coffeeImg,
     marbleBg: "radial-gradient(ellipse at 25% 30%, #F5EDE0 0%, #E8D8C0 40%, #D8C0A0 100%)",
     dots: [
       { x: "62%", y: "22%", w: 24, h: 14, bg: "#3A1808", radius: "50%", rotate: "30deg" },
@@ -95,7 +101,7 @@ export const productVisuals: ProductVisual[] = [
   {
     id: 6, name: "Coconut Breeze", family: "Tropical",
     from: "#D4C8B8", to: "#A89880", price: "Rp 40.000", tagline: "Light. Nourishing. Tropical.",
-    photo: UNS("photo-1548808889-bbbd02e9096d"),
+    photo: coconutbreezeImg,
     marbleBg: "radial-gradient(ellipse at 25% 30%, #FFFDF5 0%, #F8F2E0 40%, #F0E8C8 100%)",
     dots: [
       { x: "66%", y: "20%", w: 52, h: 52, bg: "#7A5028", radius: "50%", opacity: 0.9 },
@@ -111,7 +117,7 @@ export const productVisuals: ProductVisual[] = [
   {
     id: 7, name: "Cocoa Harmony", family: "Sweet",
     from: "#9A6030", to: "#3E1E08", price: "Rp 47.000", tagline: "Warm. Indulgent. Harmonious.",
-    photo: UNS("photo-1610450949065-1f2841536c88"),
+    photo: cocoaImg,
     marbleBg: "radial-gradient(ellipse at 25% 30%, #F5E8D0 0%, #E8D0B0 40%, #D8B888 100%)",
     dots: [
       { x: "62%", y: "22%", w: 21, h: 14, bg: "#3A1808", radius: "40%", rotate: "28deg" },
@@ -125,7 +131,7 @@ export const productVisuals: ProductVisual[] = [
   {
     id: 8, name: "Jasmine Bloom", family: "Floral",
     from: "#E8A5B0", to: "#B85870", price: "Rp 50.000", tagline: "Delicate. Feminine. Timeless.",
-    photo: UNS("photo-1623171404570-1d196759fe20"),
+    photo: jasminebloomImg,
     marbleBg: "radial-gradient(ellipse at 25% 30%, #FFF5F8 0%, #FFE8EE 40%, #FFD8E8 100%)",
     dots: [
       { x: "64%", y: "16%", w: 24, h: 30, bg: "#FFFEF6", radius: "50% 50% 50% 0", rotate: "28deg", opacity: 0.95, border: "1px solid #F0E0D0" },
