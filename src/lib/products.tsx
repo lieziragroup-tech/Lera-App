@@ -2,7 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { X, Check, ShoppingBag, Star, Loader2 } from "lucide-react";
 import soapberryImg from "../../imports/Soapberry_Heritage.png";
-import citrusImg from "../../imports/Citrus_Harvest.png";
+import citrusImg from "../../imports/Citrus_Harvest_1.jpeg";
+import lemongrassImg from "../../imports/Lemongrass_Refresh.jpeg";
+import patchouliImg from "../../imports/Patchouli_Essence.jpeg";
+import coffeeImg from "../../imports/Coffee_Revival_1.jpeg";
+import cocoaImg from "../../imports/Cocoa_Harmony.jpeg";
 import leraLogo from "../../imports/LERA__Eco-Dissolvable_Cleaning_Sheet.png";
 import { useAuth } from "../../lib/auth-context";
 import { createOrder } from "../../lib/firestore";
@@ -12,14 +16,14 @@ const UNS = (id: string) => `https://images.unsplash.com/${id}?w=600&h=800&fit=c
 
 // Photo per product id — actual photos take priority over CSS flat lay
 const productPhotos: Record<number, string> = {
-  1: citrusImg,
-  2: UNS("photo-1709575832758-1292590197fa"),
-  3: soapberryImg,
-  4: UNS("photo-1779206727993-7012ece9461f"),
-  5: UNS("photo-1690983323399-a7848f09bfb9"),
-  6: UNS("photo-1548808889-bbbd02e9096d"),
-  7: UNS("photo-1610450949065-1f2841536c88"),
-  8: UNS("photo-1623171404570-1d196759fe20"),
+  1: citrusImg,      // Citrus Harvest
+  2: lemongrassImg,  // Lemongrass Refresh
+  3: soapberryImg,   // Soapberry Heritage
+  4: patchouliImg,   // Patchouli Essence
+  5: coffeeImg,      // Coffee Revival
+  6: UNS("photo-1548808889-bbbd02e9096d"), // Coconut Breeze
+  7: cocoaImg,       // Cocoa Harmony
+  8: UNS("photo-1623171404570-1d196759fe20"), // Jasmine Bloom
 };
 
 const serif = { fontFamily: "'Playfair Display', Georgia, serif" };
